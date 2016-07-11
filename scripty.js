@@ -27,7 +27,6 @@ $(document).on("ready", function(){
     flash: function(colorDiv, delayMs){
       return setTimeout(function () {
         colorDiv.fadeOut(200).fadeIn(200);
-        console.log(colorDiv);
       }, delayMs);
     },
 
@@ -42,7 +41,6 @@ $(document).on("ready", function(){
       $("div.button").on("click", function (){
         if ( simon.playerColorClicks.length < simon.colorSequence.length ) {
           simon.playerColorClicks.push( $(this).attr("id") );
-          console.log($(this).attr("id") );
           simon.checkMatch();
         }
       })
@@ -50,7 +48,6 @@ $(document).on("ready", function(){
     },
 
     checkMatch: function(){
-      console.log(simon.roundStep + "/" + simon.round);
       if ( simon.playerColorClicks[simon.roundStep] == simon.colorSequence[simon.roundStep] ) {
         simon.roundStep++;
         if (simon.roundStep == simon.round){
@@ -65,8 +62,8 @@ $(document).on("ready", function(){
       simon.round++;
       simon.playerColorClicks = [];
       simon.roundStep = 0;
-        simon.randomColor();
-        simon.playSequence();
+      simon.randomColor();
+      simon.playSequence();
     }
 
   }
