@@ -1,0 +1,33 @@
+.container{
+  border: 5px black solid;
+  width: 600px;
+  height: 600px;
+  margin: auto;
+  overflow: auto;
+  border-radius: 300px;
+}
+
+.button{
+  width: 300px;
+  height: 300px;
+}
+
+#red{
+  float: right;
+  background: red;
+}
+
+#yellow{
+  float: right;
+  background: yellow;
+}
+
+#blue{
+  float: left;
+  background: blue;
+}
+
+#green{
+  float: left;
+  background: green;
+}
