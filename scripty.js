@@ -30,13 +30,6 @@ $(document).on("ready", function(){
       }, delayMs);
     },
 
-    test: function(times){
-      for (i=0; i < times; i++){
-        simon.randomColor();
-      }
-      simon.playSequence();
-    },
-
     begin: function(){
       $("div.button").on("click", function (){
         if ( simon.playerColorClicks.length < simon.colorSequence.length ) {
@@ -54,7 +47,7 @@ $(document).on("ready", function(){
           simon.playRound();
         }
       } else {
-        alert("lose");
+        alert("You made it " + simon.round + " rounds!");
       }
     },
 
@@ -65,10 +58,7 @@ $(document).on("ready", function(){
       simon.randomColor();
       simon.playSequence();
     }
-
   }
 
   simon.begin();
-
-
 });
