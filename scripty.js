@@ -1,70 +1,61 @@
-$(document).on("ready", function(){
-  var Simon = function(){
-
-
-
-    var simon = {
-      divColors: {
-        red: $("#red"),
-        yellow: $("#yellow"),
-        blue: $("#blue"),
-        green: $("#green"),
-      },
-      colorSequence: [],
-      playerColorClicks: [],
-      roundStep: 0,
-      round: 0,
-
-      randomColor: function(){
-        //returns a random number between 0 to 3
-        var randomIndex = Math.floor( Math.random() * 4 );
-        simon.colorSequence.push( Object.keys(simon.divColors)[randomIndex] );
-      },
-
-      playSequence: function() {
-        for (var divIndex = 0; divIndex < simon.colorSequence.length; divIndex++) {
-          simon.flash(simon.divColors[ simon.colorSequence[divIndex] ], divIndex * 500 + 1);
-        }
-      },
-
-      flash: function(colorDiv, delayMs){
-        return setTimeout(function () {
-          colorDiv.fadeOut(200).fadeIn(200);
-        }, delayMs);
-      },
-
-      begin: function(){
-        $("div.button").on("click", function (){
-          if ( simon.playerColorClicks.length < simon.colorSequence.length ) {
-            simon.playerColorClicks.push( $(this).attr("id") );
-            simon.checkMatch();
-          }
-        })
-        simon.playRound();
-      },
-
-      checkMatch: function(){
-        if ( simon.playerColorClicks[simon.roundStep] == simon.colorSequence[simon.roundStep] ) {
-          simon.roundStep++;
-          if (simon.roundStep == simon.round){
-            simon.playRound();
-          }
-        } else {
-          alert("You made it " + simon.round + " rounds!");
-        }
-      },
-
-      playRound: function() {
-        simon.round++;
-        simon.playerColorClicks = [];
-        simon.roundStep = 0;
-        simon.randomColor();
-        simon.playSequence();
-      }
+class Simon {
+  constructor() {
+    this.divs = {
+      red: $("#red"),
+      yellow: $("#yellow"),
+      blue: $("#blue"),
+      green: $("#green"),
     }
-    return simon;
+    this.randomSequence = []
+    this.playerSequence = []
+    this.sequenceStep = 0
+    this.round = 0
   }
-  var game = new Simon();
-  game.begin();
 
-});
+  playSequence () {
+    this.randomSequence.forEach( (color, i) => this.flash(this.divs[color], i * 350))
+  }
+
+  randomColor () {
+    let randomIndex = Math.floor(Math.random() * 4)
+    this.randomSequence.push(Object.keys(this.divs)[randomIndex])
+  }
+
+  flash (colorDiv, milliseconds) {
+    setTimeout(_ => colorDiv.fadeOut(200).fadeIn(200), milliseconds)
+  }
+
+  start () {
+    $("div.button").on("click", (event) => {
+      if (this.playerSequence.length < this.randomSequence.length) {
+        this.playerSequence.push($(event.target).attr("id"));
+        this.checkMatch();
+      }
+    })
+    this.playRound();
+  }
+
+  checkMatch () {
+    if (this.playerSequence[this.sequenceStep] == this.randomSequence[this.sequenceStep]) {
+      this.sequenceStep++;
+      if (this.sequenceStep == this.round) {
+        this.playRound();
+      }
+    } else {
+      alert("You made it " + this.round + " rounds!");
+    }
+  }
+
+  playRound () {
+    this.round++
+    this.playerSequence = []
+    this.sequenceStep = 0
+    this.randomColor()
+    this.playSequence()
+  }
+}
+
+$(document).ready(function () {
+  const simonInstance = new Simon()
+  simonInstance.start()
+})
